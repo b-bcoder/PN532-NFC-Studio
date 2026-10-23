@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PN532 NFC Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">N</div>
+          <div>
+            <h1>PN532 NFC Studio</h1>
+            <p>Lees, schrijf en wis NFC-tags</p>
+          </div>
+        </div>
+        <div id="connection" class="connection"><span></span> Niet verbonden</div>
+      </header>
+
+      <nav class="tabs" aria-label="NFC-acties">
+        <button class="tab active" data-tab="read">◉ &nbsp; Read Tag</button>
+        <button class="tab" data-tab="write">✎ &nbsp; Write Tag</button>
+        <button class="tab" data-tab="delete">⌫ &nbsp; Delete Tag</button>
+      </nav>
+
+      <section class="panel" id="read-panel">
+        <div class="page-heading">
+          <h2>NFC-tag uitlezen</h2>
+          <p>Leg een tag op de antenne van de PN532. De gevonden tekst of URL verschijnt hieronder.</p>
+        </div>
+        <button class="action primary" id="read-start">Read Tag</button>
+        <button class="action secondary hidden" id="read-cancel">Annuleren</button>
+        <label class="field-label" for="read-result">LEESRESULTAAT</label>
+        <pre class="result" id="read-result">Nog geen tag gelezen.
+
+Klik op Read Tag en leg een NFC-tag op de module.</pre>
+        <div class="url-actions hidden" id="read-url-actions" aria-label="NDEF-websites"></div>
+      </section>
+
+      <section class="panel hidden" id="write-panel">
+        <div class="page-heading">
+          <h2>NFC-tag beschrijven</h2>
+          <p>Kies URL of tekst en vul de inhoud in. Je bevestigt het schrijven nadat de tag is gedetecteerd.</p>
+        </div>
+        <div class="segmented">
+          <button class="choice selected" data-kind="url">Website URL</button>
+          <button class="choice" data-kind="text">Vrije tekst</button>
+        </div>
+        <label class="field-label" for="write-content">INHOUD</label>
+        <textarea id="write-content" rows="5" placeholder="https://voorbeeld.nl"></textarea>
+        <div class="field-note">
+          <span>Alleen MIFARE Classic-tags die met Delete Tag NDEF-klaar zijn gemaakt.</span>
+          <span id="byte-count">0 / 96 bytes</span>
+        </div>
+        <div class="detected hidden" id="write-details"></div>
+        <div class="actions">
+          <button class="action primary" id="write-start">Write Tag</button>
+          <button class="action success hidden" id="write-confirm">Confirm · schrijf tag</button>
+          <button class="action secondary hidden" id="write-cancel">Annuleren</button>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="delete-panel">
+        <div class="page-heading">
+          <h2>Tag wissen / formatteren</h2>
+          <p>De app detecteert eerst je tag. Controleer de getoonde UID en druk daarna op Confirm om door te gaan.</p>
+        </div>
+        <div class="warning">
+          <span class="warning-icon">!</span>
+          <p>Deze actie wist de NDEF-inhoud of maakt een lege MIFARE Classic-tag NDEF-klaar. Alleen een lege fabrieks-tag of een al geformatteerde tag wordt geaccepteerd.</p>
+        </div>
+        <div class="detected hidden" id="delete-details"></div>
+        <div class="actions">
+          <button class="action caution" id="delete-start">Delete Tag</button>
+          <button class="action danger hidden" id="delete-confirm">Confirm · wis tag</button>
+          <button class="action secondary hidden" id="delete-cancel">Annuleren</button>
+        </div>
+      </section>
+
+      <footer id="status" aria-live="polite">
+        Sluit de PN532 via USB aan. De verbinding wordt gecontroleerd zodra je een actie start.
+      </footer>
+    </main>
+    <div class="toast hidden" id="toast" role="alert"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "name": "pn532-nfc-studio",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Windows desktop app for reading, writing, and clearing PN532 NFC tags",
+  "author": "PN532 NFC Studio",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "python build_backend.py && electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "nl.pn532.nfcstudio",
+    "productName": "PN532 NFC Studio",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend-build/PN532_Backend",
+        "to": "backend"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "allowScripts": {
+    "electron-winstaller@5.4.0": true,
+    "electron@37.10.3": true
+  }
+}
