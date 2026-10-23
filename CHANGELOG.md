@@ -4,6 +4,8 @@ Notable changes to PN532 NFC Studio are documented here.
 
 ## Unreleased
 
+v1.0.0
+
 ### Added
 
 - Show a button for each unique, valid HTTP(S) URL/URI record read from an NDEF
